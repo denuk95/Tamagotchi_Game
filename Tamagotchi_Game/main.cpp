@@ -7,8 +7,8 @@
 
 using namespace std;
 
-const int MONITOR_WIDTH = 1600;
-const int MONITOR_HEIGHT = 900;
+int MONITOR_WIDTH = 1600;
+int MONITOR_HEIGHT = 900;
 
 bool init()
 {
@@ -39,8 +39,8 @@ int main(int argc, char* args[])
 	else
 	{
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
-		SDL_Texture* backgroundTx = window.loadTexture("assets/tama4.png");
-
+		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
+		SDL_Texture* frontTx = window.loadTexture("assets/tama7.png");
 
 		bool gameRunning = false;
 		SDL_Event gEvent;
@@ -60,11 +60,10 @@ int main(int argc, char* args[])
 
 			}
 			window.clearRender();
+			
 			window.render(backgroundTx);
+			window.render(frontTx);
 			window.display();
-
-
-
 		}
 
 		window.cleanUp();
