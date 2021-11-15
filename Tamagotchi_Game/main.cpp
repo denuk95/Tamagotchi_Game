@@ -1,14 +1,18 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
+#include <stdio.h>
 #include <string>
 
 #include "RenderWindow.h"
+#include "Buttons.h"
 
 using namespace std;
 
-int MONITOR_WIDTH = 1600;
-int MONITOR_HEIGHT = 900;
+const int MONITOR_WIDTH = 1600;
+const int MONITOR_HEIGHT = 900;
+
+const int TOTAL_BUTTONS = 1;
 
 bool init()
 {
@@ -40,29 +44,51 @@ int main(int argc, char* args[])
 	{
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
 		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
-		SDL_Texture* frontTx = window.loadTexture("assets/tama7.png");
+		SDL_Texture* foregroundTx = window.loadTexture("assets/tama7.png");
 
+
+		string inside;
 		bool gameRunning = false;
 		SDL_Event gEvent;
+
+		Buttons gButtons;
+		gButtons.loadButtons(&window);
+
 
 		
 		while (!gameRunning)
 		{
+			int mouse_x, mouse_y;
+			SDL_GetMouseState(&mouse_x, &mouse_y);
+			int count = 0;
 			while (SDL_PollEvent(&gEvent) != 0)
 			{
+				if (gEvent.type == SDL_QUIT)
+				{
+					gameRunning = true;
+				}
+
 				if (gEvent.type == SDL_KEYDOWN)
 				{
 					if (gEvent.key.keysym.sym == SDLK_ESCAPE)
 					{
 						gameRunning =true;
 					}
+
 				}
 
+
+				gButtons.handleEvent(&gEvent, &window);
+
 			}
+
 			window.clearRender();
-			
+
 			window.render(backgroundTx);
-			window.render(frontTx);
+			window.render(foregroundTx);
+
+			gButtons.render(&window);
+
 			window.display();
 		}
 

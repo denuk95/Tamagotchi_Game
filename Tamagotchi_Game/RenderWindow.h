@@ -10,6 +10,7 @@ class RenderWindow
 {
 	public:
 	RenderWindow(const char* p_title, int p_w, int p_h);
+	~RenderWindow();
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void clearRender();
 	void render(SDL_Texture* p_tex);
@@ -18,7 +19,9 @@ class RenderWindow
 
 
 
+
 	private:
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
+	SDL_Texture* gTexture;
 };

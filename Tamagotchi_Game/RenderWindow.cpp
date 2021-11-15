@@ -23,7 +23,7 @@ RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 
 SDL_Texture* RenderWindow::loadTexture(const char* p_filePath)
 {
-	SDL_Texture* gTexture = NULL;
+
 	gTexture = IMG_LoadTexture(gRenderer, p_filePath);
 
 	if (gTexture == NULL)
@@ -53,4 +53,9 @@ void RenderWindow::cleanUp()
 {
 	SDL_DestroyWindow(gWindow);
 	SDL_DestroyRenderer(gRenderer);
+}
+
+RenderWindow:: ~RenderWindow()
+{
+	cleanUp();
 }
