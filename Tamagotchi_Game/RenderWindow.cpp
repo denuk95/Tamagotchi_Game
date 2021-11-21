@@ -10,7 +10,7 @@ RenderWindow::RenderWindow(const char* p_title, int p_w, int p_h)
 		printf("Window couldn't be created! SDL Error: %s\n", SDL_GetError());
 	}
 
-	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
+	gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
 	if (gRenderer == NULL)
 	{
@@ -43,6 +43,18 @@ void RenderWindow::render(SDL_Texture* p_tex)
 {
 	SDL_RenderCopy(gRenderer, p_tex, NULL, NULL);
 }
+void RenderWindow::render(SDL_Texture* p_tex, SDL_Rect* MainCharacterCopy, int posX)
+{
+	int posMainCharacterX=posX;
+	cout<<posMainCharacterX<<endl;
+	int posMainCharacterY=367;
+	float scale=1.9;
+	SDL_Rect MainCharacterOnScreen = { posMainCharacterX, posMainCharacterY, scale*MainCharacterCopy->w, scale*MainCharacterCopy->h};
+
+	SDL_RenderCopy(gRenderer, p_tex, MainCharacterCopy,  &MainCharacterOnScreen);
+}
+
+
 
 void RenderWindow::display()
 {

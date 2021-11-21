@@ -24,10 +24,9 @@ const int AMOUNT_OF_BUTTONS = 3;
 class Buttons
 {
 	public:
-	Buttons();
+	Buttons(RenderWindow* gWindow);
 	void handleEvent(SDL_Event* e, RenderWindow* gWindow);
-	void render (RenderWindow* gWindow);
-	void loadButtons (RenderWindow* gWindow);
+	void renderButtons (RenderWindow* gWindow);
 
 	private:
 

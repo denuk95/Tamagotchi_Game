@@ -6,6 +6,7 @@
 
 #include "RenderWindow.h"
 #include "Buttons.h"
+#include "MainCharacter.h"
 
 using namespace std;
 
@@ -45,22 +46,25 @@ int main(int argc, char* args[])
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
 		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
 		SDL_Texture* foregroundTx = window.loadTexture("assets/tama7.png");
+		SDL_Texture* tamaSkin = window.loadTexture("assets/mob2.png");
 
-
-		string inside;
 		bool gameRunning = false;
 		SDL_Event gEvent;
 
-		Buttons gButtons;
-		gButtons.loadButtons(&window);
+		Buttons gButtons(&window);
+		MainCharacter gMainCharacter;
 
 
-		
+		unsigned int lastTime = 0, currentTime;
+		int frame = 0;
+		int positionX=480;
+		bool directionMovements=true;
 		while (!gameRunning)
 		{
 			int mouse_x, mouse_y;
 			SDL_GetMouseState(&mouse_x, &mouse_y);
 			int count = 0;
+
 			while (SDL_PollEvent(&gEvent) != 0)
 			{
 				if (gEvent.type == SDL_QUIT)
@@ -85,11 +89,52 @@ int main(int argc, char* args[])
 			window.clearRender();
 
 			window.render(backgroundTx);
+
+
+
+			window.render(tamaSkin, gMainCharacter.GetMainCharacterRect(frame/40), positionX);
+
 			window.render(foregroundTx);
 
-			gButtons.render(&window);
+
+			gButtons.renderButtons(&window);
+
+
+
+			++frame;
+
+			if (frame / 40 >= 2)
+			{
+				frame = 0;
+			}
+
+			if (positionX >= 980)
+			{
+				directionMovements=false;
+			}
+			else if(positionX <= 480)
+			{
+				directionMovements = true;
+			}
+
+			currentTime = SDL_GetTicks();
+			if (currentTime > lastTime + 60) {
+				printf("Report:%i", currentTime);
+				lastTime = currentTime;
+				if (directionMovements)
+				{
+					positionX += 5;
+				}
+				else
+				{
+					positionX -= 5;
+				}
+			}
+
+
 
 			window.display();
+
 		}
 
 		window.cleanUp();

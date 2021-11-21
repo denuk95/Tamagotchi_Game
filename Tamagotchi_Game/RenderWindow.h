@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 
 class RenderWindow
 {
@@ -14,6 +16,7 @@ class RenderWindow
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void clearRender();
 	void render(SDL_Texture* p_tex);
+	void render(SDL_Texture* p_tex, SDL_Rect* MainCharacterCopy, int posX);
 	void display();
 	void cleanUp();
 
