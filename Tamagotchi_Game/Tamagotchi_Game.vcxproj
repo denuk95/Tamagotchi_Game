@@ -146,12 +146,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Buttons.cpp" />
+    <ClCompile Include="IconsUI.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Buttons.h" />
+    <ClInclude Include="IconsUI.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="RenderWindow.h" />
   </ItemGroup>

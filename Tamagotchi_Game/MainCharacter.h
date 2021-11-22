@@ -12,10 +12,19 @@ const int WALKING_ANIMATION_FRAMES=2;
 class MainCharacter
 {
 	public:
-	MainCharacter();
-	SDL_Rect* GetMainCharacterRect(int counter);
+	MainCharacter(RenderWindow* gWindow);
+	//SDL_Rect* GetMainCharacterRect(int counter);
+	int GetMainCharacterX(bool currentTime);
+	int GetMainCharacterY();
+	void RenderMainCharacter(RenderWindow* gWindow, bool ticks);
 
 	private:
-	SDL_Rect MainCharacterSprites[WALKING_ANIMATION_FRAMES];
+	SDL_Texture* mainCharacterTx;
+	SDL_Rect mainCharacterSprites[WALKING_ANIMATION_FRAMES];
+	int mainCharacterPosX = 480;
+	int mainCharacterPosY = 380;
+	unsigned int lastTime=0;
+	bool directionMovements = true;
+	int frame=0;
 
 };

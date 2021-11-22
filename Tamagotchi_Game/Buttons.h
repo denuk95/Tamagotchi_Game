@@ -10,7 +10,7 @@
 using namespace std;
 
 
-enum ButtonsSprite
+enum class ButtonsSprite
 {
 	BUTTON_SPRITE_LEFT = 0,
 	BUTTON_SPRITE_CENTER = 1,
@@ -25,7 +25,7 @@ class Buttons
 {
 	public:
 	Buttons(RenderWindow* gWindow);
-	void handleEvent(SDL_Event* e, RenderWindow* gWindow);
+	bool handleEvent(SDL_Event* e, RenderWindow* gWindow);
 	void renderButtons (RenderWindow* gWindow);
 
 	private:

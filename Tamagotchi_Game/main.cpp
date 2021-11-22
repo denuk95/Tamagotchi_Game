@@ -7,6 +7,7 @@
 #include "RenderWindow.h"
 #include "Buttons.h"
 #include "MainCharacter.h"
+#include "IconsUI.h"
 
 using namespace std;
 
@@ -46,92 +47,80 @@ int main(int argc, char* args[])
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
 		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
 		SDL_Texture* foregroundTx = window.loadTexture("assets/tama7.png");
-		SDL_Texture* tamaSkin = window.loadTexture("assets/mob2.png");
 
-		bool gameRunning = false;
+
+		bool bGameRunning = false;
 		SDL_Event gEvent;
 
 		Buttons gButtons(&window);
-		MainCharacter gMainCharacter;
+		Icons gIcons(&window);
+		MainCharacter gMainCharacter(&window);
 
-
-		unsigned int lastTime = 0, currentTime;
 		int frame = 0;
-		int positionX=480;
-		bool directionMovements=true;
-		while (!gameRunning)
+
+		unsigned int currentTime, lastTime=0;
+
+		bool bTick= true;
+
+
+		while (!bGameRunning)
 		{
 			int mouse_x, mouse_y;
 			SDL_GetMouseState(&mouse_x, &mouse_y);
 			int count = 0;
+			bool bTemp=false;
 
 			while (SDL_PollEvent(&gEvent) != 0)
 			{
 				if (gEvent.type == SDL_QUIT)
 				{
-					gameRunning = true;
+					bGameRunning = true;
 				}
 
 				if (gEvent.type == SDL_KEYDOWN)
 				{
 					if (gEvent.key.keysym.sym == SDLK_ESCAPE)
 					{
-						gameRunning =true;
+						bGameRunning =true;
 					}
 
 				}
 
+				if (gEvent.type == SDL_KEYDOWN)
+				{
+					if (gEvent.key.keysym.sym == SDLK_UP)
+					{
+						bTemp = true;
+					}
 
-				gButtons.handleEvent(&gEvent, &window);
+				}
+
+				
+				bTemp = gButtons.handleEvent(&gEvent, &window);
 
 			}
 
 			window.clearRender();
 
 			window.render(backgroundTx);
-
-
-
-			window.render(tamaSkin, gMainCharacter.GetMainCharacterRect(frame/40), positionX);
+			gMainCharacter.RenderMainCharacter(&window, bTick);
 
 			window.render(foregroundTx);
 
+			gIcons.renderIcons(&window, bTemp);
 
 			gButtons.renderButtons(&window);
 
-
-
-			++frame;
-
-			if (frame / 40 >= 2)
-			{
-				frame = 0;
-			}
-
-			if (positionX >= 980)
-			{
-				directionMovements=false;
-			}
-			else if(positionX <= 480)
-			{
-				directionMovements = true;
-			}
-
 			currentTime = SDL_GetTicks();
-			if (currentTime > lastTime + 60) {
-				printf("Report:%i", currentTime);
+
+			if (currentTime > lastTime + 30) {
 				lastTime = currentTime;
-				if (directionMovements)
-				{
-					positionX += 5;
-				}
-				else
-				{
-					positionX -= 5;
-				}
+				bTick = true;
 			}
-
-
+			else
+			{
+				bTick = false;
+			}
 
 			window.display();
 

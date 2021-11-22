@@ -43,15 +43,25 @@ void RenderWindow::render(SDL_Texture* p_tex)
 {
 	SDL_RenderCopy(gRenderer, p_tex, NULL, NULL);
 }
-void RenderWindow::render(SDL_Texture* p_tex, SDL_Rect* MainCharacterCopy, int posX)
-{
-	int posMainCharacterX=posX;
-	cout<<posMainCharacterX<<endl;
-	int posMainCharacterY=367;
-	float scale=1.9;
-	SDL_Rect MainCharacterOnScreen = { posMainCharacterX, posMainCharacterY, scale*MainCharacterCopy->w, scale*MainCharacterCopy->h};
 
-	SDL_RenderCopy(gRenderer, p_tex, MainCharacterCopy,  &MainCharacterOnScreen);
+
+
+void RenderWindow::render(SDL_Texture* p_tex, SDL_Rect* mainCharacterCopy, int posMainCharacterX, int posMainCharacterY)
+{
+
+	float scale=1.8;
+
+	SDL_Rect MainCharacterOnScreen = { posMainCharacterX, posMainCharacterY, scale* mainCharacterCopy->w, scale* mainCharacterCopy->h};
+
+	SDL_RenderCopy(gRenderer, p_tex, mainCharacterCopy,  &MainCharacterOnScreen);
+}
+
+void RenderWindow::render(SDL_Texture* p_tex, int iconPosX, int iconPosY, int iconWidth, int iconHeight)
+{
+
+	SDL_Rect iconOnScreen = { iconPosX , iconPosY , iconWidth , iconHeight };
+
+	SDL_RenderCopy(gRenderer, p_tex, NULL , &iconOnScreen);
 }
 
 

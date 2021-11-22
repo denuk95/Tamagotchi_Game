@@ -4,7 +4,7 @@ Buttons::Buttons(RenderWindow* gWindow)
 {
 	mPosition.x = 0;
 	mPosition.y = 0;
-	mCurrentSprite= BUTTON_NULL_STATE;
+	mCurrentSprite= ButtonsSprite::BUTTON_NULL_STATE;
 	for (int i = 0; i < AMOUNT_OF_BUTTONS; i++)
 	{
 		buttonPressed[i]=NULL;
@@ -17,14 +17,14 @@ Buttons::Buttons(RenderWindow* gWindow)
 
 void Buttons::renderButtons(RenderWindow* gWindow)
 {	
-	if(mCurrentSprite!= BUTTON_NULL_STATE)
+	if(mCurrentSprite!= ButtonsSprite::BUTTON_NULL_STATE)
 	{
-		gWindow->render(buttonPressed[mCurrentSprite]);
+		gWindow->render(buttonPressed[static_cast<int>(mCurrentSprite)]);
 	}
 
 }
 
-void Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
+bool Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 {
 	if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP)
 	{
@@ -35,16 +35,16 @@ void Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
-				mCurrentSprite = BUTTON_NULL_STATE;
-
+				mCurrentSprite = ButtonsSprite::BUTTON_NULL_STATE;
 			}
 			else if (e->type == SDL_MOUSEBUTTONUP)
 			{
-				mCurrentSprite = BUTTON_SPRITE_LEFT;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_LEFT;
+				return true;
 			}
 			else
 			{	
-				mCurrentSprite = BUTTON_SPRITE_LEFT;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_LEFT;
 			}
 		}
 		//Center button
@@ -52,15 +52,15 @@ void Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
-				mCurrentSprite = BUTTON_NULL_STATE;
+				mCurrentSprite = ButtonsSprite::BUTTON_NULL_STATE;
 			}
 			else if (e->type == SDL_MOUSEBUTTONUP)
 			{
-				mCurrentSprite = BUTTON_SPRITE_CENTER;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_CENTER;
 			}
 			else
 			{
-				mCurrentSprite = BUTTON_SPRITE_CENTER;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_CENTER;
 			}
 		}
 		//Right button
@@ -68,26 +68,26 @@ void Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
-				mCurrentSprite = BUTTON_NULL_STATE;
+				mCurrentSprite = ButtonsSprite::BUTTON_NULL_STATE;
 			}
 			else if (e->type == SDL_MOUSEBUTTONUP)
 			{
-				mCurrentSprite = BUTTON_SPRITE_RIGHT;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_RIGHT;
 			}
 			else
 			{
-				mCurrentSprite = BUTTON_SPRITE_RIGHT;
+				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_RIGHT;
 			}
 		}
 		else
 		{
-			mCurrentSprite = BUTTON_NULL_STATE;
+			mCurrentSprite = ButtonsSprite::BUTTON_NULL_STATE;
 		}
 
 
 
 
 	}
-
+	return false;
 
 }

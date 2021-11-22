@@ -1,20 +1,73 @@
 #include "MainCharacter.h"
 
-MainCharacter::MainCharacter()
+MainCharacter::MainCharacter(RenderWindow* gWindow)
 {
-	MainCharacterSprites[ 0 ].x = 16;
-	MainCharacterSprites[ 0 ].y = 75;
-	MainCharacterSprites[ 0 ].w = 70;
-	MainCharacterSprites[ 0 ].h = 89;
+	mainCharacterSprites[ 0 ].x = 16;
+	mainCharacterSprites[ 0 ].y = 75;
+	mainCharacterSprites[ 0 ].w = 70;
+	mainCharacterSprites[ 0 ].h = 89;
 	
-	MainCharacterSprites[ 1 ].x = 170;
-	MainCharacterSprites[ 1 ].y = 75;
-	MainCharacterSprites[ 1 ].w = 70;
-	MainCharacterSprites[ 1 ].h = 89;
+	mainCharacterSprites[ 1 ].x = 170;
+	mainCharacterSprites[ 1 ].y = 75;
+	mainCharacterSprites[ 1 ].w = 70;
+	mainCharacterSprites[ 1 ].h = 89;
+
+	mainCharacterTx = gWindow->loadTexture("assets/mob2.png");
+
 }
 
-SDL_Rect* MainCharacter::GetMainCharacterRect(int counter)
+int MainCharacter::GetMainCharacterX(bool currentTime)
 {
+	
+	if (mainCharacterPosX >= 980)
+	{
+		directionMovements = false;
+	}
+	else if (mainCharacterPosX <= 480)
+	{
+		directionMovements = true;
+	}
 
-	return &MainCharacterSprites[counter];
+	
+	if (currentTime) {
+		if (directionMovements)
+		{
+			mainCharacterPosX += 3;
+			//cout<< mainCharacterPosX<<endl;
+
+		}
+		else
+		{
+			mainCharacterPosX -= 3;
+			//cout << mainCharacterPosX << endl;
+		}
+	}
+	return mainCharacterPosX;
+
+
 }
+int MainCharacter::GetMainCharacterY()
+{
+	return mainCharacterPosY;
+}
+
+void MainCharacter::RenderMainCharacter(RenderWindow* gWindow, bool ticks)
+{
+	gWindow->render(mainCharacterTx, &mainCharacterSprites[frame / 40], GetMainCharacterX(ticks), mainCharacterPosY);
+
+	
+	++frame;
+
+	if (frame / 40 >= 2)
+	{
+		frame = 0;
+	}
+
+}
+
+
+
+//SDL_Rect* MainCharacter::GetMainCharacterRect(int counter)
+//{
+//	return &mainCharacterSprites[counter];
+//}
