@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string>
+#include <cmath>
 
 #include "RenderWindow.h"
 
@@ -27,6 +28,9 @@ class Buttons
 	Buttons(RenderWindow* gWindow);
 	bool handleEvent(SDL_Event* e, RenderWindow* gWindow);
 	void renderButtons (RenderWindow* gWindow);
+
+	protected:
+	bool insideButton(SDL_Point mousePos, SDL_Point buttonCenter);
 
 	private:
 

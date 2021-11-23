@@ -23,6 +23,20 @@ void Buttons::renderButtons(RenderWindow* gWindow)
 	}
 
 }
+bool Buttons::insideButton(SDL_Point mousePos, SDL_Point buttonCenter)
+{
+	float distance;
+	const float BUTTON_RADIUS = 37;
+
+	distance = sqrt(pow(buttonCenter.x - mousePos.x, 2) +pow(buttonCenter.y - mousePos.y, 2));
+
+	if (distance < BUTTON_RADIUS)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 bool Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 {
@@ -31,7 +45,14 @@ bool Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 		SDL_GetMouseState(&mPosition.x, &mPosition.y);
 
 		//Left button
-		if (mPosition.x > 622 && mPosition.x < 622 + 75 && mPosition.y > 654 && mPosition.y < 654 + 75)
+		SDL_Point leftCenter = { 659, 691};
+		SDL_Point centerButton = { 801, 766 };
+		SDL_Point rightCenter = { 941, 691 };
+
+
+		//659x 691y center left button radius 37,5 diameter 75
+		// if(insideButton(mPosition, leftCenter)
+		if (insideButton(mPosition, leftCenter))
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -47,8 +68,11 @@ bool Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 				mCurrentSprite = ButtonsSprite::BUTTON_SPRITE_LEFT;
 			}
 		}
+
+
+
 		//Center button
-		else if (mPosition.x > 764 && mPosition.x < 764 + 75 && mPosition.y > 729 && mPosition.y < 729 + 75)
+		else if (insideButton(mPosition, centerButton))
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
@@ -64,7 +88,7 @@ bool Buttons::handleEvent(SDL_Event* e, RenderWindow *gWindow)
 			}
 		}
 		//Right button
-		else if (mPosition.x > 904 && mPosition.x < 904 + 75 && mPosition.y > 654 && mPosition.y < 654 + 75)
+		else if (insideButton(mPosition, rightCenter))
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{

@@ -52,42 +52,13 @@ void Icons::changeIconsAlpha(bool alpha)
 		SDL_SetTextureAlphaMod(iconsList[i], 50);
 	}
 
-	switch (counter)
+	if (counter > 9)
 	{
-	case 0:
-		SDL_SetTextureAlphaMod(iconsList[0], 250);
-		break;
-	case 1:
-		SDL_SetTextureAlphaMod(iconsList[1], 250);
-		break;
-	case 2:
-		SDL_SetTextureAlphaMod(iconsList[2], 250);
-		break;
-	case 3:
-		SDL_SetTextureAlphaMod(iconsList[3], 250);
-		break;
-	case 4:
-		SDL_SetTextureAlphaMod(iconsList[4], 250);
-		break;
-	case 5:
-		SDL_SetTextureAlphaMod(iconsList[5], 250);
-		break;
-	case 6:
-		SDL_SetTextureAlphaMod(iconsList[6], 250);
-		break;
-	case 7:
-		SDL_SetTextureAlphaMod(iconsList[7], 250);
-		break;
-	case 8:
-		SDL_SetTextureAlphaMod(iconsList[8], 250);
-		break;
-	case 9:
-		SDL_SetTextureAlphaMod(iconsList[9], 250);
-		break;
-	default:
 		counter=0;
-		break;
 	}
+
+	SDL_SetTextureAlphaMod(iconsList[counter], 250);
+
 
 	if (alpha)
 	{
