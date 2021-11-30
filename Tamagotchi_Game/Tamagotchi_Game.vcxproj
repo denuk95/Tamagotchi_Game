@@ -145,14 +145,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Buttons.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CircledButton.cpp" />
     <ClCompile Include="IconsUI.cpp" />
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Buttons.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="CircledButton.h" />
     <ClInclude Include="IconsUI.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="RenderWindow.h" />

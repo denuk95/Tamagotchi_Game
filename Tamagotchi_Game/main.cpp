@@ -5,7 +5,7 @@
 #include <string>
 
 #include "RenderWindow.h"
-#include "Buttons.h"
+#include "CircledButton.h"
 #include "MainCharacter.h"
 #include "IconsUI.h"
 
@@ -13,6 +13,7 @@ using namespace std;
 
 const int MONITOR_WIDTH = 1600;
 const int MONITOR_HEIGHT = 900;
+const int CIRCLE_RADIUS = 37;
 
 const int TOTAL_BUTTONS = 1;
 
@@ -52,7 +53,24 @@ int main(int argc, char* args[])
 		bool bGameRunning = false;
 		SDL_Event gEvent;
 
-		Buttons gButtons(&window);
+		CircledButton circleLeft (&window ,658, 690, CIRCLE_RADIUS);
+		CircledButton circleCenter (&window, 799, 765, CIRCLE_RADIUS);
+		CircledButton circleRight (&window, 940, 690, CIRCLE_RADIUS);
+
+		CircledButton* buttons[3];
+		buttons[0] = &circleLeft;
+		buttons[1] = &circleCenter;
+		buttons[2] = &circleRight;
+
+		//Tab toilet;
+		//Tab food;
+
+		//Tab* arrayTabs[10];
+
+		//Tab[0] = &toilet;
+
+
+
 		Icons gIcons(&window);
 		MainCharacter gMainCharacter(&window);
 
@@ -68,7 +86,9 @@ int main(int argc, char* args[])
 			int mouse_x, mouse_y;
 			SDL_GetMouseState(&mouse_x, &mouse_y);
 			int count = 0;
-			bool bTemp=false;
+			bool bTemp = false;
+			bool bPressed = false;
+
 
 			while (SDL_PollEvent(&gEvent) != 0)
 			{
@@ -95,8 +115,32 @@ int main(int argc, char* args[])
 
 				}
 
-				
-				bTemp = gButtons.handleEvent(&gEvent, &window);
+				for (int i = 0; i < 3; i++)
+				{
+					buttons[i]->handleEvent(&gEvent, &window);
+					if (i == 0)
+					{
+						bTemp = buttons[i]->handleEvent(&gEvent, &window);
+						if (bTemp)
+						{
+							cout << gIcons.getCurrentIcon() << endl;
+						}
+
+					}
+					if (i == 2)
+					{
+
+						bPressed = buttons[i]->handleEvent(&gEvent, &window);
+						if (bPressed)
+						{
+							cout << gIcons.getCurrentIcon() << endl;
+						}
+						//arrayTabs[gIcons.getCurrentIcon()]->action;
+					}
+
+
+				}
+
 
 			}
 
@@ -109,7 +153,13 @@ int main(int argc, char* args[])
 
 			gIcons.renderIcons(&window, bTemp);
 
-			gButtons.renderButtons(&window);
+
+
+			for (int i = 0; i < 3; i++)
+			{
+				buttons[i]->renderButtons();
+			}
+
 
 			currentTime = SDL_GetTicks();
 

@@ -65,6 +65,9 @@ void Icons::changeIconsAlpha(bool alpha)
 		counter++;
 	}
 
+}
 
-
+int Icons::getCurrentIcon()
+{
+	return counter;
 }

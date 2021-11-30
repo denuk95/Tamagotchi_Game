@@ -24,7 +24,6 @@ enum class UpperIcons
 	EIGHTH_ICON = 7,
 	NINTH_ICON = 8,
 	TENTH_ICON = 9
-
 };
 
 
@@ -36,10 +35,10 @@ class Icons
 	Icons(RenderWindow* gWindow);
 	void renderIcons(RenderWindow* gWindow, bool temp);
 	void changeIconsAlpha(bool alpha);
+	int getCurrentIcon();
 
 
 	private:
-
 	UpperIcons icon;
 	SDL_Texture* iconsList[10];
 	int counter = 0;

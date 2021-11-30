@@ -22,11 +22,9 @@ class RenderWindow
 	void cleanUp();
 
 
-
-
 	private:
 	int mainCharacterPosX = 0;
 	SDL_Window* gWindow;
 	SDL_Renderer* gRenderer;
-	SDL_Texture* gTexture;
+	SDL_Texture* gTexture = nullptr;
 };

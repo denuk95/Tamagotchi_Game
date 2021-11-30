@@ -21,7 +21,7 @@
     <ClCompile Include="RenderWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Buttons.cpp">
+    <ClCompile Include="CircledButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MainCharacter.cpp">
@@ -30,18 +30,24 @@
     <ClCompile Include="IconsUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Buttons.h">
+    <ClInclude Include="CircledButton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainCharacter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IconsUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
