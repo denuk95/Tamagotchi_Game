@@ -64,10 +64,3 @@ void MainCharacter::RenderMainCharacter(RenderWindow* gWindow, bool ticks)
 	}
 
 }
-
-
-
-//SDL_Rect* MainCharacter::GetMainCharacterRect(int counter)
-//{
-//	return &mainCharacterSprites[counter];
-//}

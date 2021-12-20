@@ -8,6 +8,10 @@
 #include "CircledButton.h"
 #include "MainCharacter.h"
 #include "IconsUI.h"
+#include "Tabs/Tab.h"
+#include "Tabs/Food.h"
+#include "Tabs/Toilet.h"
+#include "StatTracking.h"
 
 using namespace std;
 
@@ -15,7 +19,6 @@ const int MONITOR_WIDTH = 1600;
 const int MONITOR_HEIGHT = 900;
 const int CIRCLE_RADIUS = 37;
 
-const int TOTAL_BUTTONS = 1;
 
 bool init()
 {
@@ -34,6 +37,15 @@ bool init()
 	}
 
 	return success;
+}
+
+bool isDead(StatTracking &tracking)
+{
+	if (tracking.getHealth() < 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -62,12 +74,22 @@ int main(int argc, char* args[])
 		buttons[1] = &circleCenter;
 		buttons[2] = &circleRight;
 
-		//Tab toilet;
-		//Tab food;
+		Tab* arrayTabs[5];
 
-		//Tab* arrayTabs[10];
 
-		//Tab[0] = &toilet;
+		Food food(&window);
+		Toilet toilet(&window);
+
+		//Tab information(&window);
+		
+		//Tab attention(&window);
+		//Tab medicine(&window);
+
+		arrayTabs[0] = &food;
+		arrayTabs[1] = &toilet;
+		//arrayTabs[2] = &information;
+		//arrayTabs[3] = &attention;
+		//arrayTabs[4] = &medicine;
 
 
 
@@ -79,6 +101,11 @@ int main(int argc, char* args[])
 		unsigned int currentTime, lastTime=0;
 
 		bool bTick= true;
+		bool displayMC = true;
+		bool iconDisplay = false;
+		int temporary = 0;
+		bool canBeSwitched = true;
+		StatTracking tracking;
 
 
 		while (!bGameRunning)
@@ -88,6 +115,8 @@ int main(int argc, char* args[])
 			int count = 0;
 			bool bTemp = false;
 			bool bPressed = false;
+
+
 
 
 			while (SDL_PollEvent(&gEvent) != 0)
@@ -104,42 +133,48 @@ int main(int argc, char* args[])
 						bGameRunning =true;
 					}
 
-				}
-
-				if (gEvent.type == SDL_KEYDOWN)
-				{
 					if (gEvent.key.keysym.sym == SDLK_UP)
 					{
-						bTemp = true;
+						tracking.record();
+					}
+					if (gEvent.key.keysym.sym == SDLK_DOWN)
+					{
+						tracking.read();
 					}
 
 				}
 
-				for (int i = 0; i < 3; i++)
-				{
-					buttons[i]->handleEvent(&gEvent, &window);
-					if (i == 0)
+
+					for (int i = 0; i < 3; i++)
 					{
-						bTemp = buttons[i]->handleEvent(&gEvent, &window);
-						if (bTemp)
+						buttons[i]->handleEvent(&gEvent, &window);
+
+						if (i == 0 && canBeSwitched)
 						{
-							cout << gIcons.getCurrentIcon() << endl;
+							bTemp = buttons[i]->handleEvent(&gEvent, &window);
+							if (bTemp)
+							{
+								cout << gIcons.getCurrentIcon() << endl;
+							}
+
+						}
+						if (i == 2 && canBeSwitched)
+						{
+
+							bPressed = buttons[i]->handleEvent(&gEvent, &window);
+							if (bPressed)
+							{
+								cout << gIcons.getCurrentIcon() << endl;
+								iconDisplay = true;
+
+								temporary = currentTime + 5000;
+								arrayTabs[gIcons.getCurrentIcon()]->action(tracking);
+							}
 						}
 
+
+
 					}
-					if (i == 2)
-					{
-
-						bPressed = buttons[i]->handleEvent(&gEvent, &window);
-						if (bPressed)
-						{
-							cout << gIcons.getCurrentIcon() << endl;
-						}
-						//arrayTabs[gIcons.getCurrentIcon()]->action;
-					}
-
-
-				}
 
 
 			}
@@ -147,18 +182,46 @@ int main(int argc, char* args[])
 			window.clearRender();
 
 			window.render(backgroundTx);
-			gMainCharacter.RenderMainCharacter(&window, bTick);
+
+			for (int i = 0; i < 3; i++)
+			{
+				buttons[i]->renderButtons();
+			}
+
+
+
+			if (isDead(tracking))
+			{
+				displayMC = false;
+				canBeSwitched = false;
+				arrayTabs[gIcons.getCurrentIcon()]->render(&window);
+			}
+
+
+			if (iconDisplay)
+			{
+				displayMC = false;
+				arrayTabs[gIcons.getCurrentIcon()]->render(&window);
+				canBeSwitched = false;
+				if (temporary < currentTime)
+				{
+
+					displayMC = true;
+					canBeSwitched = true;
+					iconDisplay = false;
+				}
+			}
+
+			if (displayMC)
+			{
+				gMainCharacter.RenderMainCharacter(&window, bTick);
+			}
 
 			window.render(foregroundTx);
 
 			gIcons.renderIcons(&window, bTemp);
 
 
-
-			for (int i = 0; i < 3; i++)
-			{
-				buttons[i]->renderButtons();
-			}
 
 
 			currentTime = SDL_GetTicks();
@@ -175,6 +238,8 @@ int main(int argc, char* args[])
 			window.display();
 
 		}
+
+		tracking.record();
 
 		window.cleanUp();
 

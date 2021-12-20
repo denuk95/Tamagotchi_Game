@@ -25,8 +25,6 @@ class CircledButton : public Button
 
 	private:
 
-		const float CIRCLE_RADIUS = 37;
-
 		RenderWindow* windowTemporary = nullptr;
 
 		SDL_Texture* buttonPressed = nullptr;

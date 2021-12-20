@@ -33,6 +33,18 @@
     <ClCompile Include="Button.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tabs\Food.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tabs\Tab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tabs\Toilet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StatTracking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RenderWindow.h">
@@ -48,6 +60,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tabs\Food.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tabs\Tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tabs\Toilet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StatTracking.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

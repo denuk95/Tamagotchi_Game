@@ -151,6 +151,10 @@
     <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="RenderWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StatTracking.cpp" />
+    <ClCompile Include="Tabs\Food.cpp" />
+    <ClCompile Include="Tabs\Tab.cpp" />
+    <ClCompile Include="Tabs\Toilet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
@@ -158,6 +162,10 @@
     <ClInclude Include="IconsUI.h" />
     <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="RenderWindow.h" />
+    <ClInclude Include="StatTracking.h" />
+    <ClInclude Include="Tabs\Food.h" />
+    <ClInclude Include="Tabs\Tab.h" />
+    <ClInclude Include="Tabs\Toilet.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
