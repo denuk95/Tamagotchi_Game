@@ -18,18 +18,36 @@ bool Button::insideButton(SDL_Point mousePos)
 	return true;
 }
 
-bool Button::handleEvent(SDL_Event* e, RenderWindow* gWindow)
+bool Button::handleEvent(SDL_Event* e, RenderWindow* gWindow, bool bResetButton)
 {
 		SDL_GetMouseState(&mPosition.x, &mPosition.y);
 		if (insideButton(mPosition))
 		{
 			if (e->type == SDL_MOUSEBUTTONDOWN)
 			{
-				hoverButton = false;
+				hoverButton = true;
+				cout<<"Button down"<<endl;
+				timer2 = time(NULL);
 			}
 			else if (e->type == SDL_MOUSEBUTTONUP)
 			{
-				hoverButton = true;
+				hoverButton = false;
+				cout << "Button up" << endl;
+				
+				if (bResetButton)
+				{
+					timer = time(NULL);
+					if (timer > timer2 + 5)
+					{
+						cout << "YEAH" << endl;
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+
 				return true;
 			}
 			else
@@ -41,7 +59,7 @@ bool Button::handleEvent(SDL_Event* e, RenderWindow* gWindow)
 		{
 			hoverButton = false;
 		}
-
+		
 	return false;
 
 }

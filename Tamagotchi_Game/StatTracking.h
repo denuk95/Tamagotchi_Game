@@ -15,6 +15,7 @@ class StatTracking
 		StatTracking();
 		void record();
 		void read();
+		void reset();
 		int getHealth();
 		void setHealth(int value);
 		int getFood();
@@ -28,9 +29,9 @@ class StatTracking
 		ifstream myReadFile;
 		struct tm timerik = {0};
 		string str;
-		int healthLvl = 9999;
-		int foodLvl = 9999;
-		int cleanlinessLvl = 9999;
+		int healthLvl;
+		int foodLvl;
+		int cleanlinessLvl;
 
 		vector <int> lines;
 };

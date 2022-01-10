@@ -46,6 +46,7 @@ void Icons::renderIcons(RenderWindow* gWindow, bool temp)
 
 void Icons::changeIconsAlpha(bool alpha)
 {
+
 	for (int i = 0; i <= 9; i++)
 	{
 		SDL_SetTextureBlendMode(iconsList[i], SDL_BLENDMODE_BLEND);

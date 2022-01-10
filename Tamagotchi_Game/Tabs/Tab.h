@@ -19,7 +19,8 @@ class Tab
 
 	private:
 		SDL_Texture* tab = nullptr;
-		SDL_Rect mainCharacterSprites[2];
-
+		SDL_Rect tabSprites[2];
+		const int TAB_SPRITES_WIDTH = 100;
+		const int TAB_SPRITES_HEIGHT = 50;
 		int frame = 0;
 };

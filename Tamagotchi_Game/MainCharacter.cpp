@@ -21,16 +21,16 @@ int MainCharacter::GetMainCharacterX(bool currentTime)
 	
 	if (mainCharacterPosX >= 980)
 	{
-		directionMovements = false;
+		moveRight = false;
 	}
 	else if (mainCharacterPosX <= 480)
 	{
-		directionMovements = true;
+		moveRight = true;
 	}
 
 	
 	if (currentTime) {
-		if (directionMovements)
+		if (moveRight)
 		{
 			mainCharacterPosX += 3;
 			//cout<< mainCharacterPosX<<endl;

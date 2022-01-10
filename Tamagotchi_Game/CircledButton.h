@@ -17,7 +17,7 @@ class CircledButton : public Button
 		CircledButton(){};
 		CircledButton(RenderWindow* gWindow, int posX, int posY, float tempRadius);
 		void renderButtons();
-
+		void reset();
 
 	protected:
 

@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include <iostream>
 #include <string>
-#include <cmath>
+#include <time.h>
 
 #include "RenderWindow.h"
 
@@ -16,7 +16,7 @@ class Button
 {
 public:
 	Button();
-	bool handleEvent(SDL_Event* e, RenderWindow* gWindow);
+	bool handleEvent(SDL_Event* e, RenderWindow* gWindow, bool bResetButton);
 protected:
 
 	void virtual renderButtons(RenderWindow* gWindow);
@@ -26,5 +26,6 @@ protected:
 
 private:
 	SDL_Point mPosition{0,0};
+	time_t timer, timer2;
 
 };

@@ -28,3 +28,8 @@ bool CircledButton::insideButton(SDL_Point mousePos)
 
 	return false;
 }
+
+void CircledButton::reset()
+{
+	
+}

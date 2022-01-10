@@ -24,7 +24,7 @@ class MainCharacter
 	int mainCharacterPosX = 480;
 	int mainCharacterPosY = 380;
 	unsigned int lastTime=0;
-	bool directionMovements = true;
+	bool moveRight = true;
 	int frame=0;
 
 };

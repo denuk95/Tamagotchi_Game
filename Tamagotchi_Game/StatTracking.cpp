@@ -52,6 +52,13 @@ void StatTracking::read()
 
 }
 
+void StatTracking::reset()
+{
+	healthLvl = 100;
+	foodLvl = 80;
+	cleanlinessLvl = 80;
+}
+
 
 int StatTracking::getHealth()
 {

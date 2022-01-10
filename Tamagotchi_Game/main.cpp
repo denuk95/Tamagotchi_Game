@@ -57,14 +57,20 @@ int main(int argc, char* args[])
 	}
 	else
 	{
+		bool bGameRunning = false;
+		
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
 		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
 		SDL_Texture* foregroundTx = window.loadTexture("assets/tama7.png");
 
-
-		bool bGameRunning = false;
+		MainCharacter gMainCharacter(&window);
 		SDL_Event gEvent;
+		Icons gIcons(&window);
 
+
+
+
+		//Buttons
 		CircledButton circleLeft (&window ,658, 690, CIRCLE_RADIUS);
 		CircledButton circleCenter (&window, 799, 765, CIRCLE_RADIUS);
 		CircledButton circleRight (&window, 940, 690, CIRCLE_RADIUS);
@@ -74,38 +80,35 @@ int main(int argc, char* args[])
 		buttons[1] = &circleCenter;
 		buttons[2] = &circleRight;
 
+
+		//Tabs
 		Tab* arrayTabs[5];
-
-
 		Food food(&window);
 		Toilet toilet(&window);
 
 		//Tab information(&window);
-		
 		//Tab attention(&window);
 		//Tab medicine(&window);
-
 		arrayTabs[0] = &food;
 		arrayTabs[1] = &toilet;
 		//arrayTabs[2] = &information;
 		//arrayTabs[3] = &attention;
 		//arrayTabs[4] = &medicine;
 
+		StatTracking tracking;
 
 
-		Icons gIcons(&window);
-		MainCharacter gMainCharacter(&window);
 
 		int frame = 0;
-
+		unsigned int temporary = 0;
+		unsigned int resetTimer = 0;
 		unsigned int currentTime, lastTime=0;
 
 		bool bTick= true;
-		bool displayMC = true;
-		bool iconDisplay = false;
-		int temporary = 0;
-		bool canBeSwitched = true;
-		StatTracking tracking;
+		bool bDisplayMC = true;
+		bool bActionDisplay = false;
+		bool bButtonIsActive = true;
+		bool bNewGame = true;
 
 
 		while (!bGameRunning)
@@ -115,6 +118,7 @@ int main(int argc, char* args[])
 			int count = 0;
 			bool bTemp = false;
 			bool bPressed = false;
+			bool bReset = false;
 
 
 
@@ -142,31 +146,32 @@ int main(int argc, char* args[])
 						tracking.read();
 					}
 
+
+
 				}
 
 
 					for (int i = 0; i < 3; i++)
 					{
-						buttons[i]->handleEvent(&gEvent, &window);
 
-						if (i == 0 && canBeSwitched)
+						if (i == 0 && bButtonIsActive)
 						{
-							bTemp = buttons[i]->handleEvent(&gEvent, &window);
-							if (bTemp)
-							{
-								cout << gIcons.getCurrentIcon() << endl;
-							}
-
+							bTemp = buttons[i]->handleEvent(&gEvent, &window, false);
 						}
-						if (i == 2 && canBeSwitched)
-						{
 
-							bPressed = buttons[i]->handleEvent(&gEvent, &window);
+						if (i == 1 && bButtonIsActive)
+						{
+							bReset = buttons[i]->handleEvent(&gEvent, &window, true);
+						}
+
+
+						if (i == 2 && bButtonIsActive)
+						{
+							bPressed = buttons[i]->handleEvent(&gEvent, &window, false);
+
 							if (bPressed)
 							{
-								cout << gIcons.getCurrentIcon() << endl;
-								iconDisplay = true;
-
+								bActionDisplay = true;
 								temporary = currentTime + 5000;
 								arrayTabs[gIcons.getCurrentIcon()]->action(tracking);
 							}
@@ -189,30 +194,35 @@ int main(int argc, char* args[])
 			}
 
 
+			if (bReset)
+			{
+				cout<<"RESET"<<endl;
+				tracking.reset();
+			}
 
 			if (isDead(tracking))
 			{
-				displayMC = false;
-				canBeSwitched = false;
+				bDisplayMC = false;
+				bButtonIsActive = false;
 				arrayTabs[gIcons.getCurrentIcon()]->render(&window);
 			}
 
 
-			if (iconDisplay)
+			if (bActionDisplay)
 			{
-				displayMC = false;
+				bDisplayMC = false;
 				arrayTabs[gIcons.getCurrentIcon()]->render(&window);
-				canBeSwitched = false;
+				bButtonIsActive = false;
 				if (temporary < currentTime)
 				{
 
-					displayMC = true;
-					canBeSwitched = true;
-					iconDisplay = false;
+					bDisplayMC = true;
+					bButtonIsActive = true;
+					bActionDisplay = false;
 				}
 			}
 
-			if (displayMC)
+			if (bDisplayMC)
 			{
 				gMainCharacter.RenderMainCharacter(&window, bTick);
 			}
