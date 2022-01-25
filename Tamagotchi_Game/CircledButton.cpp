@@ -11,7 +11,7 @@ void CircledButton::renderButtons()
 {	
 	if(hoverButton)
 	{
-		windowTemporary->render(buttonPressed, centerX - radius, centerY - radius, 77, 77);
+		windowTemporary->renderIcon(buttonPressed, centerX - radius, centerY - radius, 77, 77);
 	}
 
 }

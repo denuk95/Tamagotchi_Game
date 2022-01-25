@@ -53,7 +53,7 @@ int MainCharacter::GetMainCharacterY()
 
 void MainCharacter::RenderMainCharacter(RenderWindow* gWindow, bool ticks)
 {
-	gWindow->render(mainCharacterTx, &mainCharacterSprites[frame / 40], GetMainCharacterX(ticks), mainCharacterPosY);
+	gWindow->render(mainCharacterTx, &mainCharacterSprites[frame / 40], GetMainCharacterX(ticks), GetMainCharacterY());
 
 	
 	++frame;

@@ -22,21 +22,21 @@ Icons::Icons(RenderWindow* gWindow)
 }
 
 
-void Icons::renderIcons(RenderWindow* gWindow, bool temp)
+void Icons::renderIcons(RenderWindow* gWindow, bool temp, bool alphaControl)
 {
 	int startPosX=535;
 	int startPosY=308;
 	int startPosY2=541;
 
-
+	everythingTransparent = alphaControl;
 	changeIconsAlpha(temp);
 
 
 	for (int i = 0, j=5; i <= 4 || j <= 9; i++, j++)
 	{
 		
-		gWindow->render(iconsList[i], startPosX, startPosY, 50, 50);
-		gWindow->render(iconsList[j], startPosX, startPosY2, 50, 50);
+		gWindow->renderIcon(iconsList[i], startPosX, startPosY, 50, 50);
+		gWindow->renderIcon(iconsList[j], startPosX, startPosY2, 50, 50);
 		startPosX += 120;
 
 	}
@@ -58,7 +58,11 @@ void Icons::changeIconsAlpha(bool alpha)
 		counter=0;
 	}
 
-	SDL_SetTextureAlphaMod(iconsList[counter], 250);
+	if (everythingTransparent)
+	{
+		SDL_SetTextureAlphaMod(iconsList[counter], 250);
+	}
+
 
 
 	if (alpha)

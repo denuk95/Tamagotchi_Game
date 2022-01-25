@@ -33,7 +33,7 @@ class Icons
 {	
 	public:
 	Icons(RenderWindow* gWindow);
-	void renderIcons(RenderWindow* gWindow, bool temp);
+	void renderIcons(RenderWindow* gWindow, bool temp, bool alphaControl);
 	void changeIconsAlpha(bool alpha);
 	int getCurrentIcon();
 
@@ -42,4 +42,5 @@ class Icons
 	UpperIcons icon;
 	SDL_Texture* iconsList[10];
 	int counter = 0;
+	bool everythingTransparent = false;
 };

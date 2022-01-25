@@ -49,17 +49,21 @@ void RenderWindow::render(SDL_Texture* p_tex)
 	SDL_RenderCopy(gRenderer, p_tex, NULL, NULL);
 }
 
-
-
 void RenderWindow::render(SDL_Texture* p_tex, SDL_Rect* rectCopy, int posX, int posY)
 {
-
-	SDL_Rect rectOnScreen = { posX, posY, scale* rectCopy->w, scale* rectCopy->h};
+	float scaleActual = scale;
+	if (posX == -1 && posY == -1)
+	{
+		scaleActual = scalePicture;
+		posX = screenCentrPoint.x - scalePicture * rectCopy->w / 2;
+		posY = screenCentrPoint.y - scalePicture * rectCopy->h / 2;
+	}
+	SDL_Rect rectOnScreen = { posX, posY, scaleActual * rectCopy->w, scaleActual * rectCopy->h};
 
 	SDL_RenderCopy(gRenderer, p_tex, rectCopy,  &rectOnScreen);
 }
 
-void RenderWindow::render(SDL_Texture* p_tex, int iconPosX, int iconPosY, int iconWidth, int iconHeight)
+void RenderWindow::renderIcon(SDL_Texture* p_tex, int iconPosX, int iconPosY, int iconWidth, int iconHeight)
 {
 
 	SDL_Rect iconOnScreen = { iconPosX , iconPosY , iconWidth , iconHeight };
@@ -67,15 +71,6 @@ void RenderWindow::render(SDL_Texture* p_tex, int iconPosX, int iconPosY, int ic
 	SDL_RenderCopy(gRenderer, p_tex, NULL , &iconOnScreen);
 }
 
-void RenderWindow::renderCentr(SDL_Texture* p_tex, SDL_Rect* picture)
-{
-	float posX = screenCentrPoint.x - scalePicture * picture->w / 2;
-	float posY = screenCentrPoint.y - scalePicture * picture->h / 2;
-
-	SDL_Rect pictureOnScreen = { posX, posY, scalePicture * picture->w, scalePicture * picture->h };
-
-	SDL_RenderCopy(gRenderer, p_tex, picture, &pictureOnScreen);
-}
 
 void RenderWindow::display()
 {

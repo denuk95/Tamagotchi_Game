@@ -22,7 +22,7 @@ Tab::Tab(RenderWindow* temp1Window, const char* path)
 
 void Tab::render(RenderWindow* tempWindow)
 {
-	tempWindow->renderCentr(tab, &tabSprites[frame / 40]);
+	tempWindow->render(tab, &tabSprites[frame / 40]);
 
 	++frame;
 	if (frame / 40 >= 2)

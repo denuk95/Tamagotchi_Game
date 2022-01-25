@@ -62,6 +62,10 @@ int main(int argc, char* args[])
 		RenderWindow window("Tamagotchi", MONITOR_WIDTH, MONITOR_HEIGHT);
 		SDL_Texture* backgroundTx = window.loadTexture("assets/tama6.png");
 		SDL_Texture* foregroundTx = window.loadTexture("assets/tama7.png");
+		SDL_Texture* screenMessagesTx = window.loadTexture("assets/screenMessages.png");
+		
+
+		SDL_Rect gameOver{0,0,100,50};
 
 		MainCharacter gMainCharacter(&window);
 		SDL_Event gEvent;
@@ -109,6 +113,7 @@ int main(int argc, char* args[])
 		bool bActionDisplay = false;
 		bool bButtonIsActive = true;
 		bool bNewGame = true;
+		bool bSelection = true;
 
 
 		while (!bGameRunning)
@@ -159,7 +164,7 @@ int main(int argc, char* args[])
 							bTemp = buttons[i]->handleEvent(&gEvent, &window, false);
 						}
 
-						if (i == 1 && bButtonIsActive)
+						if (i == 1 && (bButtonIsActive || isDead(tracking)))
 						{
 							bReset = buttons[i]->handleEvent(&gEvent, &window, true);
 						}
@@ -198,13 +203,17 @@ int main(int argc, char* args[])
 			{
 				cout<<"RESET"<<endl;
 				tracking.reset();
+				bButtonIsActive = true;
+				bDisplayMC = true;
+				bSelection = true;
 			}
 
 			if (isDead(tracking))
 			{
 				bDisplayMC = false;
 				bButtonIsActive = false;
-				arrayTabs[gIcons.getCurrentIcon()]->render(&window);
+				bSelection = false;
+				window.render(screenMessagesTx, &gameOver);
 			}
 
 
@@ -229,7 +238,7 @@ int main(int argc, char* args[])
 
 			window.render(foregroundTx);
 
-			gIcons.renderIcons(&window, bTemp);
+			gIcons.renderIcons(&window, bTemp, bSelection);
 
 
 
